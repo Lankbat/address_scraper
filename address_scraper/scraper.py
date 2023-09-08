@@ -4,6 +4,18 @@ from openpyxl import Workbook
 
 BASE_URL = "https://lookups.melissa.com/home/addresssearch/"
 
+# To retrieve cookies, open up dev tools in your browser
+# and then navigate to the 'Application Tab' in the top.
+# under storage, click on the cookies tab and paste the values
+# for the cookies below.
+cookies = {
+    'ASPSESSIONIDCUTDRDRQ': '',
+    'ASPSESSIONIDCWTCQDRR': '',
+    'md_counter': '',
+    'u': '',
+    'messagesUtk': ''
+}
+
 # Prompting user for input
 street_name = input("Enter street name: ")
 city_name = input("Enter city: ")
@@ -17,10 +29,9 @@ payload = {
     "state": state_abbrev,
     "zip": zipcode
 }
-
 # Using requests.Session() to maintain any session cookies
 with requests.Session() as session:
-    response = session.post(BASE_URL, data=payload)
+    response = session.post(BASE_URL, data=payload, cookies=cookies)
 
     # Check for successful request
     if response.status_code == 200:
